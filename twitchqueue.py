@@ -21,18 +21,18 @@ if ShouldUpdateAllowlist:
  
 #load the allowlist of stream urls
 with open("allowlist.txt","r") as f:
-        WhiteList = f.readlines()
+        AllowList = f.readlines()
 f.close()
  
-if len(WhiteList) == 0:
+if len(AllowList) == 0:
         print ("Allowlist is empty. Exiting...")
         exit()
 else:
-        print ("Discovered %d allowlist streamers" % (len(WhiteList)))
+        print ("Discovered %d allowlist streamers" % (len(AllowList)))
  
 #trim off newline of each element
-for i in range(0,len(WhiteList)):
-        WhiteList[i] = WhiteList[i].rstrip('\n')
+for i in range(0,len(AllowList)):
+        AllowList[i] = AllowList[i].rstrip('\n')
  
 CurrentStream = 0 #index of stream currently being displayed
  
@@ -40,14 +40,14 @@ print ("\nLooking for online streamers...")
  
 while True:#continue looping through allowlist of streamers
         if os.name == 'nt':#Windows
-                os.system('livestreamer --retry-open %d twitch.tv/%s best -p "%s"' %(RetryNum,WhiteList[CurrentStream],player))
+                os.system('livestreamer --retry-open %d twitch.tv/%s best -p "%s"' %(RetryNum,AllowList[CurrentStream],player))
         else:#not windows
-                os.system('livestreamer --retry-open %d twitch.tv/%s best -np "%s"' %(RetryNum,WhiteList[CurrentStream],player))
-        #halts scrip here while livestreamer is running ^^^^^
+                os.system('livestreamer --retry-open %d twitch.tv/%s best -np "%s"' %(RetryNum,AllowList[CurrentStream],player))
+        #halts script here while livestreamer is running ^^^^^
  
         CurrentStream+=1
-        if CurrentStream == len(WhiteList):#loop back around to the first streamer
+        if CurrentStream == len(AllowList):#loop back around to the first streamer
                 CurrentStream = 0
-                print ("\ntwitch.tv/%s appears to be offline. Trying twitch.tv/%s\n" % (WhiteList[len(WhiteList)-1],WhiteList[CurrentStream]))
+                print ("\ntwitch.tv/%s appears to be offline. Trying twitch.tv/%s\n" % (AllowList[len(AllowList)-1],AllowList[CurrentStream]))
         else:  
-                print ("\ntwitch.tv/%s appears to be offline. Trying twitch.tv/%s\n" % (WhiteList[CurrentStream-1],WhiteList[CurrentStream]))
+                print ("\ntwitch.tv/%s appears to be offline. Trying twitch.tv/%s\n" % (AllowList[CurrentStream-1],AllowList[CurrentStream]))
